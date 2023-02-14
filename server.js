@@ -5,6 +5,7 @@ const server = http.createServer(app);
 const logger = require("morgan");
 const cors = require("cors");
 const passport = require("passport");
+const multer = require("multer");
 
 const usersRoutes = require("./routes/userRoute");
 
@@ -27,7 +28,11 @@ app.disable("x-powered-by");
 
 app.set("port", port);
 
-usersRoutes(app);
+const upload = multer({
+  storage: multer.memoryStorage(),
+});
+
+usersRoutes(app, upload);
 
 server.listen(3000, "192.168.56.1" || "localhost", function () {
   console.log("Aplication Nodejs " + port + "runing....");
